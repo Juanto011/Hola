@@ -1,0 +1,59 @@
+---
+/*
+ * PORTAFOLIO
+ * No edites este archivo para cambiar los videos.
+ * Los videos se configuran en src/config.ts → PORTFOLIO
+ * y los archivos van en public/videos/ y public/posters/
+ */
+import VideoCard from './VideoCard.astro';
+import { PORTFOLIO, TEXT, type Lang } from '../config';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = TEXT[lang].portfolio;
+---
+<section id="portfolio" class="bg-sand-100 py-20 sm:py-28" aria-labelledby="portfolio-title">
+  <div class="container-x">
+    <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end" data-reveal>
+      <div class="max-w-2xl">
+        <p class="eyebrow">{t.eyebrow}</p>
+        <h2 id="portfolio-title" class="h2 mt-4">{t.title}</h2>
+      </div>
+      <p class="max-w-sm text-ink-soft">{t.intro}</p>
+    </div>
+    <div class="mt-12 columns-2 gap-3 sm:gap-6 lg:columns-3">
+      {PORTFOLIO.map((item, i) => <VideoCard item={item} lang={lang} index={i} />)}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Carga el video solo cuando la persona toca "play" (carga rápida)
+  document.querySelectorAll<HTMLButtonElement>('.play-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest<HTMLElement>('.video-card');
+      if (!card) return;
+      const { src, youtube } = card.dataset;
+      let el: HTMLElement;
+      if (youtube) {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${youtube}?autoplay=1&rel=0&playsinline=1`;
+        iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        iframe.allowFullscreen = true;
+        iframe.title = btn.getAttribute('aria-label') ?? 'Video';
+        el = iframe;
+      } else if (src) {
+        const video = document.createElement('video');
+        video.src = src;
+        video.controls = true;
+        video.autoplay = true;
+        video.playsInline = true;
+        const img = card.querySelector('img');
+        if (img) video.poster = img.src;
+        el = video;
+      } else return;
+      el.className = 'absolute inset-0 h-full w-full object-cover';
+      card.replaceChildren(el);
+      el.focus();
+    });
+  });
+</script>

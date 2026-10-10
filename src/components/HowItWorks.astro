@@ -1,0 +1,31 @@
+---
+import { TEXT, type Lang } from '../config';
+interface Props { lang: Lang }
+const t = TEXT[Astro.props.lang].how;
+---
+<section id="how" class="py-20 sm:py-28" aria-labelledby="how-title">
+  <div class="container-x">
+    <div class="max-w-2xl" data-reveal>
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 id="how-title" class="h2 mt-4">{t.title}</h2>
+    </div>
+    <ol class="relative mt-12 grid gap-10 sm:grid-cols-3 sm:gap-8">
+      <div aria-hidden="true" class="absolute top-7 right-[16%] left-[16%] hidden border-t border-dashed border-ink/20 sm:block"></div>
+      {t.steps.map((s, i) => (
+        <li class="relative flex gap-5 sm:flex-col sm:items-center sm:text-center" data-reveal style={`--d:${i * 120}ms`}>
+          <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-jungle font-display text-2xl text-sand-50 ring-8 ring-sand-50">
+            {i + 1}
+          </span>
+          <div>
+            <h3 class="font-display text-2xl font-medium sm:mt-4">{s.title}</h3>
+            <p class="mt-2 leading-relaxed text-ink-soft sm:mx-auto sm:max-w-xs">{s.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <p class="mt-12 flex items-center justify-center gap-2 text-center font-semibold text-jungle" data-reveal>
+      <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M13 3 5 13.5h6L10 21l8-10.5h-6L13 3Z" stroke-linejoin="round" /></svg>
+      {t.note}
+    </p>
+  </div>
+</section>

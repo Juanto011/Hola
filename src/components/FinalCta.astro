@@ -1,0 +1,19 @@
+---
+import BookButton from './BookButton.astro';
+import { TEXT, whatsappLink, type Lang } from '../config';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = TEXT[lang].final;
+---
+<section class="relative overflow-hidden bg-sand-200/60 py-20 sm:py-28" aria-labelledby="final-title">
+  <div class="container-x text-center" data-reveal>
+    <h2 id="final-title" class="h2 mx-auto max-w-3xl">{t.title}</h2>
+    <p class="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">{t.text}</p>
+    <div class="mt-8 flex flex-col items-center gap-4">
+      <BookButton label={t.cta} class="w-full sm:w-auto" />
+      <a href={whatsappLink(lang)} target="_blank" rel="noopener" data-track="Contact" class="text-sm font-semibold text-jungle underline decoration-jungle/30 underline-offset-4 hover:decoration-jungle">
+        {t.whatsapp}
+      </a>
+    </div>
+  </div>
+</section>

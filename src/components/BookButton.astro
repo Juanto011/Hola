@@ -1,0 +1,18 @@
+---
+// Botón principal "Agendar llamada". El enlace viene de src/config.ts → bookingUrl
+import { SITE } from '../config';
+interface Props { label: string; variant?: 'primary' | 'light'; class?: string }
+const { label, variant = 'primary', class: className } = Astro.props;
+---
+<a
+  href={SITE.bookingUrl}
+  target="_blank"
+  rel="noopener"
+  data-track="Lead"
+  class:list={[variant === 'primary' ? 'btn-primary' : 'btn-light', className]}
+>
+  <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+    <rect x="3.5" y="5" width="17" height="15" rx="2.5" /><path d="M3.5 9.5h17M8 3v4M16 3v4" stroke-linecap="round" />
+  </svg>
+  {label}
+</a>

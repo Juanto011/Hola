@@ -1,0 +1,115 @@
+---
+import '@fontsource-variable/fraunces';
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+import { SITE, TEXT, type Lang } from '../config';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = TEXT[lang];
+const site = Astro.site ?? new URL(SITE.url);
+const canonical = new URL(lang === 'en' ? '/' : '/es/', site).href;
+const ogImage = new URL(lang === 'en' ? '/og-image.png' : '/og-image-es.png', site).href;
+---
+
+<!doctype html>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t.meta.title}</title>
+    <meta name="description" content={t.meta.description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={new URL('/', site).href} />
+    <link rel="alternate" hreflang="es" href={new URL('/es/', site).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL('/', site).href} />
+    <meta name="theme-color" content="#1f3d2f" />
+
+    <!-- Favicon temporal: reemplaza public/favicon.svg y public/apple-touch-icon.png -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph: así se ve el enlace al compartirlo en WhatsApp / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.businessName} />
+    <meta property="og:title" content={t.meta.title} />
+    <meta property="og:description" content={t.meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'es_CR'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={t.meta.title} />
+    <meta name="twitter:description" content={t.meta.description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script is:inline>document.documentElement.classList.add('js');</script>
+
+    {/*
+      ===================== META PIXEL DE FACEBOOK =====================
+      No pegues código aquí: solo pon tu ID en src/config.ts → metaPixelId.
+      (Si Meta te pide pegar el código completo, este bloque ya es ese
+      código; solo necesita el ID.)
+    */}
+    {
+      SITE.metaPixelId && (
+        <>
+          <script is:inline define:vars={{ pixelId: SITE.metaPixelId }}>
+            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+            n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+            document,'script','https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', pixelId);
+            fbq('track', 'PageView');
+          </script>
+          <noscript>
+            <img
+              height="1"
+              width="1"
+              style="display:none"
+              alt=""
+              src={`https://www.facebook.com/tr?id=${SITE.metaPixelId}&ev=PageView&noscript=1`}
+            />
+          </noscript>
+        </>
+      )
+    }
+    {/* ================================================================== */}
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      // Animaciones suaves al hacer scroll
+      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px' },
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-visible'));
+      }
+
+      // Eventos para el Meta Pixel (solo si está activo)
+      document.addEventListener('click', (ev) => {
+        const target = (ev.target as HTMLElement).closest<HTMLElement>('[data-track]');
+        const fbq = (window as any).fbq;
+        if (target && typeof fbq === 'function') fbq('track', target.dataset.track);
+      });
+    </script>
+  </body>
+</html>

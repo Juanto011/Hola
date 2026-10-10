@@ -1,0 +1,40 @@
+---
+// Página completa. El orden de las secciones se cambia aquí.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import Hero from './Hero.astro';
+import Problem from './Problem.astro';
+import Solution from './Solution.astro';
+import Portfolio from './Portfolio.astro';
+import HowItWorks from './HowItWorks.astro';
+import Offer from './Offer.astro';
+import Trust from './Trust.astro';
+import Testimonials from './Testimonials.astro';
+import Faq from './Faq.astro';
+import FinalCta from './FinalCta.astro';
+import Footer from './Footer.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+import type { Lang } from '../config';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+<BaseLayout lang={lang}>
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sand-50">
+    {lang === 'en' ? 'Skip to content' : 'Saltar al contenido'}
+  </a>
+  <Header lang={lang} />
+  <main id="main">
+    <Hero lang={lang} />
+    <Problem lang={lang} />
+    <Solution lang={lang} />
+    <Portfolio lang={lang} />
+    <HowItWorks lang={lang} />
+    <Offer lang={lang} />
+    <Trust lang={lang} />
+    <Testimonials lang={lang} />
+    <Faq lang={lang} />
+    <FinalCta lang={lang} />
+  </main>
+  <Footer lang={lang} />
+  <WhatsAppButton lang={lang} />
+</BaseLayout>

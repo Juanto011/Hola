@@ -1,0 +1,15 @@
+---
+import { SITE } from '../config';
+interface Props { light?: boolean }
+const { light = false } = Astro.props;
+---
+<span class="inline-flex items-center gap-2.5">
+  <svg viewBox="0 0 32 32" class="h-8 w-8 shrink-0 sm:h-9 sm:w-9" aria-hidden="true">
+    <rect width="32" height="32" rx="9" fill={light ? '#fbf8f3' : '#1f3d2f'} />
+    <path d="M7 25V13.2L16 6l9 7.2V25" fill="none" stroke={light ? '#1f3d2f' : '#fbf8f3'} stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" />
+    <path d="M11.5 25v-7.5l4.5 4 4.5-4V25" fill="none" stroke="#d08a64" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" />
+  </svg>
+  <span class:list={['font-display text-base leading-none font-medium tracking-tight whitespace-nowrap max-[359px]:sr-only sm:text-lg', light ? 'text-sand-50' : 'text-ink']}>
+    {SITE.businessName}
+  </span>
+</span>

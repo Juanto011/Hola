@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 960">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1f3d2f"/><stop offset=".55" stop-color="#4f6b55"/><stop offset="1" stop-color="#d9a17f"/>
+    </linearGradient>
+  </defs>
+  <rect width="540" height="960" fill="url(#sky)"/>
+  <circle cx="380" cy="430" r="90" fill="#e8b48f" opacity=".75"/>
+  <path d="M0 640 Q140 560 270 610 T540 580 V960 H0Z" fill="#2c4a3a"/>
+  <path d="M0 720 Q180 650 330 700 T540 690 V960 H0Z" fill="#1f3d2f"/>
+  <g fill="#fbf8f3" opacity=".95">
+    <rect x="110" y="600" width="300" height="10" rx="2"/>
+    <rect x="130" y="610" width="260" height="90" fill="#efe6d8"/>
+    <rect x="150" y="625" width="110" height="60" fill="#e3a581" opacity=".85"/>
+    <rect x="280" y="625" width="90" height="60" fill="#d9c9b0"/>
+    <rect x="80" y="700" width="380" height="12" rx="2"/>
+  </g>
+  <rect x="90" y="712" width="360" height="26" fill="#8fa58a" opacity=".6"/>
+  <g stroke="#0f2019" stroke-width="7" fill="none" stroke-linecap="round">
+    <path d="M455 760 C450 650 440 560 470 470"/>
+  </g>
+  <g fill="#0f2019">
+    <path d="M470 470 C420 440 380 450 350 480 C395 465 430 468 470 470Z"/>
+    <path d="M470 470 C440 420 450 380 480 350 C470 395 472 430 470 470Z"/>
+    <path d="M470 470 C510 430 545 430 560 450 C525 450 500 458 470 470Z"/>
+    <path d="M470 470 C520 470 545 500 550 530 C525 505 500 488 470 470Z"/>
+  </g>
+</svg>

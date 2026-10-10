@@ -1,0 +1,26 @@
+---
+import { TEXT, type Lang } from '../config';
+interface Props { lang: Lang }
+const t = TEXT[Astro.props.lang].faq;
+---
+<section id="faq" class="py-20 sm:py-28" aria-labelledby="faq-title">
+  <div class="container-x grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+    <div data-reveal>
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 id="faq-title" class="h2 mt-4">{t.title}</h2>
+    </div>
+    <div class="divide-y divide-ink/10 border-y border-ink/10" data-reveal>
+      {t.items.map((item) => (
+        <details class="group" name="faq">
+          <summary class="flex min-h-16 cursor-pointer items-center justify-between gap-6 py-5 text-left text-lg font-medium">
+            {item.q}
+            <span class="faq-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-ink/15 transition-transform duration-300" aria-hidden="true">
+              <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 4v12M4 10h12" stroke-linecap="round" /></svg>
+            </span>
+          </summary>
+          <p class="pr-12 pb-6 leading-relaxed text-ink-soft">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

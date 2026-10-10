@@ -1,0 +1,55 @@
+---
+import Logo from './Logo.astro';
+import { SITE, TEXT, type Lang } from '../config';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = TEXT[lang].nav;
+const home = lang === 'en' ? '/' : '/es/';
+const otherHref = lang === 'en' ? '/es/' : '/';
+const otherLang = lang === 'en' ? 'es' : 'en';
+const links = [
+  { href: '#solution', label: t.solution },
+  { href: '#portfolio', label: t.portfolio },
+  { href: '#how', label: t.how },
+  { href: '#faq', label: t.faq },
+];
+---
+<header class="sticky top-0 z-40 border-b border-ink/5 bg-sand-50/85 backdrop-blur-md">
+  <div class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-2 px-4 sm:px-8">
+    <a href={home} aria-label={SITE.businessName} class="min-w-0 rounded-lg">
+      <Logo />
+    </a>
+
+    <nav aria-label="Main" class="hidden lg:block">
+      <ul class="flex items-center gap-8 text-sm font-medium text-ink-soft">
+        {links.map((l) => (
+          <li><a href={l.href} class="transition hover:text-ink">{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2 sm:gap-3">
+      {/* Botón para cambiar idioma */}
+      <a
+        href={otherHref}
+        hreflang={otherLang}
+        lang={otherLang}
+        title={t.switchLabel}
+        aria-label={t.switchLabel}
+        class="inline-flex h-9 shrink-0 items-center rounded-full border border-ink/15 p-0.5 text-[11px] font-semibold sm:h-10 sm:p-1 sm:text-xs"
+      >
+        <span class:list={['rounded-full px-2 py-1.5 sm:px-2.5', lang === 'en' ? 'bg-ink text-sand-50' : 'text-ink-soft']}>EN</span>
+        <span class:list={['rounded-full px-2 py-1.5 sm:px-2.5', lang === 'es' ? 'bg-ink text-sand-50' : 'text-ink-soft']}>ES</span>
+      </a>
+      <a
+        href={SITE.bookingUrl}
+        target="_blank"
+        rel="noopener"
+        data-track="Lead"
+        class="inline-flex h-9 shrink-0 items-center rounded-full bg-jungle px-3.5 text-[13px] font-semibold whitespace-nowrap sm:h-10 sm:px-4 sm:text-sm text-sand-50 transition hover:bg-jungle-700"
+      >
+        {t.cta}
+      </a>
+    </div>
+  </div>
+</header>

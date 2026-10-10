@@ -1,0 +1,32 @@
+---
+import { TEXT, type Lang } from '../config';
+interface Props { lang: Lang }
+const t = TEXT[Astro.props.lang].solution;
+// Forma del "marco" para ilustrar cada formato
+const frames = ['aspect-[16/9] w-24', 'aspect-[9/16] w-12', 'aspect-[9/16] w-12'];
+---
+<section id="solution" class="py-20 sm:py-28" aria-labelledby="solution-title">
+  <div class="container-x grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+    <div class="lg:sticky lg:top-28 lg:self-start" data-reveal>
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 id="solution-title" class="h2 mt-4">{t.title}</h2>
+      <p class="mt-6 max-w-md text-lg leading-relaxed text-ink-soft">{t.intro}</p>
+    </div>
+    <ul class="grid gap-4">
+      {t.items.map((item, i) => (
+        <li class="group flex items-center gap-6 rounded-3xl bg-jungle p-6 text-sand-50 sm:p-8" data-reveal style={`--d:${i * 100}ms`}>
+          <div class="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-jungle-700">
+            <div class:list={['relative rounded-md border-2 border-sand-50/80 transition group-hover:scale-105', frames[i]]}>
+              <svg viewBox="0 0 20 20" class="absolute inset-0 m-auto h-4 w-4 text-clay" fill="currentColor" aria-hidden="true"><path d="M6.5 4.5v11l9-5.5-9-5.5Z" /></svg>
+            </div>
+          </div>
+          <div>
+            <p class="text-xs font-semibold tracking-[0.18em] text-moss">{item.format}</p>
+            <h3 class="mt-1 font-display text-2xl font-medium">{item.title}</h3>
+            <p class="mt-2 leading-relaxed text-sand-200">{item.text}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

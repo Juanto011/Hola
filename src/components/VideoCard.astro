@@ -1,0 +1,39 @@
+---
+import type { PortfolioItem, Lang } from '../config';
+import { TEXT } from '../config';
+interface Props { item: PortfolioItem; lang: Lang; index: number }
+const { item, lang, index } = Astro.props;
+const t = TEXT[lang].portfolio;
+const title = item.title[lang];
+const playable = Boolean(item.src || item.youtubeId);
+const poster = item.poster || (item.youtubeId ? `https://i.ytimg.com/vi/${item.youtubeId}/hqdefault.jpg` : '');
+const ratio = item.orientation === 'vertical' ? 'aspect-[9/16]' : 'aspect-[16/9]';
+---
+<figure class="mb-5 break-inside-avoid sm:mb-6" data-reveal style={`--d:${(index % 3) * 90}ms`}>
+  <div
+    class:list={['video-card relative overflow-hidden rounded-3xl bg-jungle-900', ratio]}
+    data-src={item.src || undefined}
+    data-youtube={item.youtubeId || undefined}
+  >
+    {poster && (
+      <img src={poster} alt={title} loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" />
+    )}
+    {playable ? (
+      <button
+        type="button"
+        class="play-btn group absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/40 via-transparent to-transparent"
+        aria-label={`${t.play}: ${title}`}
+      >
+        <span class="flex h-12 w-12 items-center sm:h-16 sm:w-16 justify-center rounded-full bg-sand-50/95 text-jungle shadow-xl transition group-hover:scale-110">
+          <svg viewBox="0 0 20 20" class="ml-1 h-6 w-6" fill="currentColor" aria-hidden="true"><path d="M6 4v12l10-6-10-6Z" /></svg>
+        </span>
+      </button>
+    ) : (
+      <span class="absolute top-2.5 left-2.5 rounded-full bg-sand-50/90 px-2.5 py-1 text-[11px] font-semibold text-ink sm:top-4 sm:left-4 sm:px-3 sm:text-xs">{t.placeholder}</span>
+    )}
+  </div>
+  <figcaption class="mt-2.5 flex flex-col gap-0.5 px-1 text-sm sm:mt-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3 sm:text-base">
+    <span class="font-medium">{title}</span>
+    <span class="shrink-0 text-xs text-ink-soft">{item.tag[lang]}</span>
+  </figcaption>
+</figure>

@@ -1,0 +1,31 @@
+---
+import BookButton from './BookButton.astro';
+import { TEXT, type Lang } from '../config';
+interface Props { lang: Lang }
+const t = TEXT[Astro.props.lang].offer;
+---
+<section class="px-3 sm:px-6" aria-labelledby="offer-title">
+  <div class="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-jungle px-6 py-16 text-sand-50 sm:rounded-[2.5rem] sm:px-14 sm:py-20" data-reveal>
+    <div aria-hidden="true" class="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(208,138,100,0.35),transparent_65%)]"></div>
+    <div class="relative grid items-center gap-10 lg:grid-cols-2">
+      <div>
+        <p class="text-xs font-semibold tracking-[0.18em] text-moss uppercase">{t.eyebrow}</p>
+        <h2 id="offer-title" class="mt-4 font-display text-4xl leading-tight font-medium sm:text-6xl">
+          {t.title} <span class="block text-[#e3a581] italic">{t.price}</span>
+        </h2>
+        <p class="mt-5 max-w-md text-lg leading-relaxed text-sand-200">{t.text}</p>
+      </div>
+      <div>
+        <ul class="space-y-3">
+          {t.bullets.map((b) => (
+            <li class="flex items-center gap-3 rounded-2xl bg-jungle-700/70 px-5 py-4">
+              <svg viewBox="0 0 20 20" class="h-5 w-5 shrink-0 text-moss" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m4.5 10.5 3.5 3.5 7.5-8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+        <BookButton label={t.cta} variant="light" class="mt-6 w-full" />
+      </div>
+    </div>
+  </div>
+</section>

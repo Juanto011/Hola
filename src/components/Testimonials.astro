@@ -1,0 +1,31 @@
+---
+/*
+ * TESTIMONIOS — esta sección NO se muestra hasta que:
+ *   1) agregues testimonios reales en src/config.ts → TESTIMONIALS
+ *   2) cambies SITE.showTestimonials a true
+ */
+import { SITE, TESTIMONIALS, TEXT, type Lang } from '../config';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = TEXT[lang].testimonials;
+const show = SITE.showTestimonials && TESTIMONIALS.length > 0;
+---
+{show && (
+  <section class="pt-20 sm:pt-28" aria-labelledby="testimonials-title">
+    <div class="container-x">
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h2 id="testimonials-title" class="h2 mt-4">{t.title}</h2>
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {TESTIMONIALS.map((x) => (
+          <figure class="rounded-3xl bg-sand-100 p-7" data-reveal>
+            <blockquote class="font-display text-xl leading-snug">“{x.quote[lang]}”</blockquote>
+            <figcaption class="mt-5 text-sm">
+              <span class="font-semibold">{x.name}</span>
+              <span class="block text-ink-soft">{x.role[lang]}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
