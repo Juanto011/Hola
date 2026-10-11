@@ -5,3 +5,6 @@ dist/
 .DS_Store
 .vercel/
 .netlify/
+
+# 10K Websites: raw generations and review copies never ship
+review/
